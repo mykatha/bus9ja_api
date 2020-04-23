@@ -23,7 +23,9 @@ const busCompanies = require('./routes/busCompanies');
 //const trips = require('./routes/trips');
 //const auth = require('./routes/auth');
 //const users = require('./routes/users');
-//const reviews = require('./routes/reviws');
+//const reviews = require('./routes/reviews');
+
+
 
 const app = express();
 
