@@ -10,14 +10,15 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Get single user
-// @route Get /api/v2/auth/users/:id
+// @route GET /api/v2/auth/users/:id
 // @access private/Admin
 exports.getUsers = asyncHandler(async (req, res, next) => {
-    const user = awaitUser.findById(req.params.id);
-    res.status(200).json({
-        success: true,
-        data: user
-    });
+const user = await User.findById(req.params.id);
+
+res.status(200).json({
+    success: true,
+    data: user
+});
 });
 
 // @desc Create User
@@ -27,7 +28,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
     const user = await User.create(req.body);
 
     res.status(201).json({
-        sucess: true,
+        success: true,
         data: user
     });
 });

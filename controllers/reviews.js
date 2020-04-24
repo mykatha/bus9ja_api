@@ -8,8 +8,8 @@ const BusCompanie = require('..models/BusCompanie');
 //@route GET /api/v2/busCompanies/:busCompanieid/reviews
 // @access Public
 exports.getReviews = asyncHandler(async (req, res, next) => {
-    if (req.params.busCompanieid) {
-        const reviews = await reviews.find({ busCompanie: req.param.busCompanieid});
+    if (req.params.busCompanieId) {
+        const reviews = await Review.find({ busCompanie: req.param.busCompanieId});
 
         return res.status(200).json({
             success: true,
@@ -17,7 +17,7 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
             data: reviews
         });
     } else {
-        res.status(200).json(res.advancedResult);
+        res.status(200).json(res.advancedResults);
     }
 });
 
@@ -26,7 +26,8 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.getReview = asyncHandler(async (req, res, next) => {
     const review = await Review.findById(req.params.id).populate({
-        path: 'busCompanie'
+        path: 'busCompanie',
+        select: 'name description'
     });
     
     if (!review) {
@@ -47,14 +48,15 @@ exports.getReview = asyncHandler(async (req, res, next) => {
 // @route POST /api/v2/busCompanies/:busCompanie:id/reviews
 // :access Private
 exports.addReview = asyncHandler(async(req, res, next) => {
-    req.body.busCompanie = req.params.busCompanieid;
-    const busCompanie = await BusCompanie.findById(req.params.busCompanieid)
+    req.body.busCompanie = req.params.busCompanieId;
+    req.body.user = req.user.id;
+    const busCompanie = await BusCompanie.findById(req.params.busCompanieId)
 
     if (!busCompanie) {
         return next(
             new ErrorResponse(
                 `No busCompanie with the id of
-                ${req.params.busCompanieid}`, 404
+                ${req.params.busCompanieId}`, 404
             )
         );
     }
@@ -68,7 +70,7 @@ exports.addReview = asyncHandler(async(req, res, next) => {
 // @desc Update review
 // @route PUT /api/v2/review/ :id
 // @access Private
-exports.UpdateReview = asyncHandler(async (req, res, next) => {
+exports.updateReview = asyncHandler(async (req, res, next) => {
     let review = await Review.findById(req.params.id);
     if (!review) {
         return next(
@@ -89,7 +91,7 @@ exports.UpdateReview = asyncHandler(async (req, res, next) => {
     });
     res.status(200).json({
         success: true,
-        data: true
+        data: review
     });
 });
 
@@ -103,7 +105,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
             new ErrorResponse(`NO review with the id ${req.params.id}`, 404)
         );
     }
-    // Make sure reviews belong to user or user is admin
+    // Make sure reviews belongs to user or user is admin
     if (review.user.toString() !== req.user.id && req.user.role !== 'admin') {
       return next(new ErrorResponse(`Not authorized to update review`), 401)
     }

@@ -27,7 +27,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     const { email, password} = req.body;
     // Validate email & password
     if (!email || !password) {
-        return next(new ErrorResponse('please provide an invalid email and password', 400))
+        return next(new ErrorResponse('please provide an email and password', 400))
     }
 
     // Check for user
@@ -37,8 +37,8 @@ exports.login = asyncHandler(async (req, res, next) => {
 
     }
     //check if password matches
-    const ismatch = await user.matchPassword(password);
-    if (!ismatch) {
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
         return next(new ErrorResponse('invalid credential', 401));
     }
     sendTokenResponse(user, 200, res);
@@ -49,7 +49,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @route GET /api/v2/auth/logout
 // @access Private
 exports.logout = asyncHandler(async (req, res, next) => {
-    res.cokies('token', 'none', {
+    res.cookie('token', 'none', {
         expires: new Date(Date.now() + 10 * 1000),
         httpOnly: true
     });
@@ -75,12 +75,12 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 // @route PUT /api/v2/updatedetals
 // @access Private
 exports.updateDetails = asyncHandler(async (req, res, next) => {
-    const fieldToUpdate = {
+    const fieldsToUpdate = {
         name: req.body.name,
         email: req.body.email
 
     };
-    const user = await User.findByIdAndUpdate(req.user.id, fieldToUpdate, {
+    const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
         new: true,
         runValidators: true
     });
@@ -121,7 +121,8 @@ exports.forgotPassword = asyncHandler(async (req, res, next) =>{
     const resetUrl = `${req.protocol}://${req.get(
         'host'
     )}/api/v2/auth/resetpassword/${resetToken}`;
-    const message = `You are recieving this email because you or someone else 
+
+    const message = `You are recieving this email because you (or someone else)
     have requested to reset the password. please make a PUT request to:
     \n\n${resetUrl}`;
 
@@ -137,7 +138,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) =>{
     } catch (err) {
         console.log(err);
         user.ResetPasswordToken = undefined;
-        user.ResetPasswordToken = undefined;
+        user.ResetPasswordExpire = undefined;
 
         await user.save({ validateBeforeSave: false});
         return next(new ErrorResponse('Email could not be sent', 500))
@@ -178,7 +179,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedJwtToken();
     const options = {
         expires: new Date(
-            Date.now() + process.env.JWT_COOKIES * 24 * 60 *60 * 1000
+            Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 *60 * 1000
         ),
         httpOnly: true
     };
@@ -187,7 +188,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     }
     res
      .status(statusCode)
-     .cookies('token', token, options)
+     .cookie('token', token, options)
      .json({
          success: true,
          token
