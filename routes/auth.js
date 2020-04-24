@@ -1,7 +1,7 @@
-const exress = require('express');
+const express = require('express');
 const {
-    regisetr,
-    loging,
+    register,
+    login,
     logout,
     getMe,
     forgotPassword,

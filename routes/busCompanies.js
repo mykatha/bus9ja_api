@@ -5,12 +5,14 @@ const {
     getBusCompanie,
      createBusCompanie, 
      updateBusCompanie, 
-     deleteBusCompanie
+     deleteBusCompanie,
+     getBusCompaniesInRadius,
+     busCompaniePhotoUpload
     } = require('../controllers/busCompanies');
     //const BusCompanie = require('../models/BusCompanie');
 
     // Include other resources routers
-    //const tripRouter = require('./trips')
+    //const tripRouter = require('./trips');
     //const reviewRouter = require('./reviews');
 
     

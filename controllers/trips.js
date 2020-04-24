@@ -1,5 +1,5 @@
 const ErrorResponse = require('../utils/errorResponse');
-const asynHandler = require('../middleware/async');
+const asyncHandler = require('../middleware/async');
 const trip = require('..models/Trip');
 const BusCompanie = require('../models/busCompanie');
 
@@ -26,7 +26,7 @@ exports.getTrips = asyncHandler(async (req, res, next) => {
 // @route GET /apiv2/trips/:id
 // @access public
 
-exports.getTrips = asynHandler(async (req, res, next) => {
+exports.getTrips = asyncHandler(async (req, res, next) => {
     const trip = await Trip.findById(req.params.id).populate({
         path: 'busCompanie',
         select: 'name description'
@@ -47,7 +47,7 @@ exports.getTrips = asynHandler(async (req, res, next) => {
 // @desc Add Trip
 // @route POST /api/v2/busCompanies/:busCompanieid/trips
 // @access Private
-exports.addTrip = asynHandler(async (req, res, next) => {
+exports.addTrip = asyncHandler(async (req, res, next) => {
     req.body.busCompanie = req.params.busCompanieId;
     req.body.user = req.user.id;
 
@@ -81,7 +81,7 @@ exports.addTrip = asynHandler(async (req, res, next) => {
 // @route PUT /api/v2/trips/:id
 // @access Private
 
-exports.updateTrip = asynHandler(async (req, res, next) => {
+exports.updateTrip = asyncHandler(async (req, res, next) => {
     let trip = await Trip.findById(req.params.id);
 
     if (!trip){
@@ -115,7 +115,7 @@ res.status(200).json({
 // @desc Delete trip
 // @route DELETE /\api/v2/trips/:id
 // @access Private
-exports.deleteTrip = asynHandler(async (req, res, next) => {
+exports.deleteTrip = asyncHandler(async (req, res, next) => {
     const trip = await Trip.findById(req.params.id);
     if (!trip) {
         return next (

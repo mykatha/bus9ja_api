@@ -3,7 +3,7 @@ const slugify = require('slugify');
 const geocoder = require('../utils/geocoder');
 
 
-const BusCompanieSchema = new mongooseSchema(
+const BusCompanieSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -154,7 +154,7 @@ const BusCompanieSchema = new mongooseSchema(
             default: Date.now
         },
         user: {
-          type: mongoose.Schema.objectid,
+          type: mongoose.Schema.Objectid,
           ref: 'User',
           required: true
         }

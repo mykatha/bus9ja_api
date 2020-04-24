@@ -1,6 +1,6 @@
 const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
-const assyncHandler = require('../middleware/async');
+const asyncHandler = require('../middleware/async');
 //const geocoder = require('../utils/geocoder');
 //const BusCompanie = require('../models/BusCompanie');
 
@@ -12,7 +12,7 @@ const assyncHandler = require('../middleware/async');
 //  @access public
 
 
-exports.getBusCompanies =  assyncHandler(async (req, res, next) => {
+exports.getBusCompanies =  asyncHandler(async (req, res, next) => {
     res.status(200).json(res.advancedResults);
 
 });
@@ -21,7 +21,7 @@ exports.getBusCompanies =  assyncHandler(async (req, res, next) => {
 //  @access public
 
 
-exports.getBusCompanie = assyncHandler(async (req, res, next) => {
+exports.getBusCompanie = asyncHandler(async (req, res, next) => {
 const busCompanie = await busCompanie.findById(req.parama.id);
 if (!busCompanie) {
     return next(
@@ -38,7 +38,7 @@ res.status(200).json({success: true, data: busCompanie});
 //  @access private(must login and get a token)
 
 
-exports.createBusCompanie = assyncHandler( async (req, res, next) => {
+exports.createBusCompanie = asyncHandler( async (req, res, next) => {
     //add user a req,body
     req.body.user = req.user.id;
     
@@ -65,7 +65,7 @@ exports.createBusCompanie = assyncHandler( async (req, res, next) => {
 //  @access public
 
 
-exports.updateBusCompanie = assyncHandler(async (req, res, next) => {
+exports.updateBusCompanie = asyncHandler(async (req, res, next) => {
     let busCompanie = await BusCompanie.findById(req.params.id);
 
     if (!busCompanie) {
@@ -96,7 +96,7 @@ exports.updateBusCompanie = assyncHandler(async (req, res, next) => {
 //  @access public
 
 
-exports.deleteBusCompanie = assyncHandler(async (req, res, next) => {
+exports.deleteBusCompanie = asyncHandler(async (req, res, next) => {
     const busCompanie = await BusCompanie.findById(req.params.id);
     
     if (!busCompanie) {
@@ -124,7 +124,7 @@ exports.deleteBusCompanie = assyncHandler(async (req, res, next) => {
 // @desc Get busCompanies within a radius
 // @route GET /api/v2/busCompanies/redius/:zipcode/:distance
 // @access private
-exports.getBusCompaniesInRadius = assyncHandler(async (req, res, next) => {
+exports.getBusCompaniesInRadius = asyncHandler(async (req, res, next) => {
     const {zipcode, distance} = req.params;
 
     // Get lat/Lng from geocoder
@@ -150,7 +150,7 @@ exports.getBusCompaniesInRadius = assyncHandler(async (req, res, next) => {
 //@desc Upload photo for busCompanie
 //@raute PUT /api/v2/busCompanies/:id/photo
 //@access Private
-exports.busCompaniePhotoUpload = assyncHandler(async (req, res, next) => {
+exports.busCompaniePhotoUpload = asyncHandler(async (req, res, next) => {
     const busCompanie = await BusCompanie.findById(req.params.id);
 
     if (!busCompanie) {
