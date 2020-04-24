@@ -20,7 +20,7 @@ const router = express.Router();
 //const { protect, authorize} = require('../middleware/auth');
 
 // Re-reoute into other resource routers
-//router.use('/:busCompannieid/trips', tripRouter);
+//router.use('/:busCompanieid/trips', tripRouter);
 //router.use('/:busCompaniesid/reviews', reviewRouter);
 
 //router.route('/redius:/zipcode/:distance').get(getBusCompaniesInRadius);
