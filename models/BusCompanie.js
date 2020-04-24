@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const slugify = require('sluggify');
+const slugify = require('slugify');
 const geocoder = require('../utils/geocoder');
 
 
@@ -201,4 +201,4 @@ BusCompanieSchema.vitual('trips', {
     foreignField: 'busCompanie',
     justOne: false
 });
-module.exports = mongoose.model('BusCompanieSchema');
+module.exports = mongoose.model('BusCompanie', BusCompanieSchema);
