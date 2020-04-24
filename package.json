@@ -29,6 +29,7 @@
     "mongoose": "^5.9.10",
     "morgan": "^1.10.0",
     "package-lock.json": "^1.0.0",
+    "slugify": "^1.4.0",
     "slugify-url": "^1.2.0",
     "xss-clean": "^0.1.1"
   },
