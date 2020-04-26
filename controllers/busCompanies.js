@@ -1,8 +1,8 @@
 const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
-//const geocoder = require('../utils/geocoder');
-//const BusCompanie = require('../models/BusCompanie');
+const geocoder = require('../utils/geocoder');
+const BusCompanie = require('../models/BusCompanie');
 
 
 
@@ -22,10 +22,10 @@ exports.getBusCompanies =  asyncHandler(async (req, res, next) => {
 
 
 exports.getBusCompanie = asyncHandler(async (req, res, next) => {
-const busCompanie = await busCompanie.findById(req.parama.id);
+const busCompanie = await busCompanie.findById(req.params.id);
 if (!busCompanie) {
     return next(
-        new ErrorResponse(`BusCompanie not found with id of${req.params.id}`, 400)
+        new ErrorResponse(`BusCompanie not found with id of ${req.params.id}`, 400)
     );
     
 }
@@ -42,7 +42,7 @@ exports.createBusCompanie = asyncHandler( async (req, res, next) => {
     //add user a req,body
     req.body.user = req.user.id;
     
-    //check for published busComapnie
+    //check for published busCompanie
     const publishedBusCompanie = await BusCompanie.findOne({ user: req.user.id});
     
     // If the user is not an Admin, they can only add one busCompanie
@@ -135,9 +135,9 @@ exports.getBusCompaniesInRadius = asyncHandler(async (req, res, next) => {
     // calc redius using redians
     // Divide dist by redius of Earth
     //Earth Radius = 3, 963 mi / 6, 378 km
-    const redius = distance / 3963;
+    const radius = distance / 3963;
 
-    const busCompanies = BusCompanie.find({
+    const busCompanies = await BusCompanie.find({
         location: {$geoWithin: { $centerSphere: [[lng, lat], radius]}}
     });
     res.status(200).json
@@ -160,7 +160,7 @@ exports.busCompaniePhotoUpload = asyncHandler(async (req, res, next) => {
             )
         );
     }
-    //Make sure is busCompanie owner
+    //Make sure user is busCompanie owner
     if (busCompanie.user.toString() !== req.user.id && req.user.role !== 'admin') {
         return next(
             new ErrorResponse(

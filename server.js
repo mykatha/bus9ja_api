@@ -44,21 +44,21 @@ if(process.env.NODE_ENV === 'development') {
 app.use(fileupload());
 
 //Sanitize data
-//app.use(mongooseSanitize());
+app.use(mongoSanitize());
 
 //Set security headers
-//app.use(hemet());
+app.use(helmet());
 
 //Prevent xss attacks
 app.use(xss());
 
 //Rate limiting
 
-//const limiter = reateLimit({
- //   windows: 10 * 60 * 1000, //10 mins
-  //  max:100
-//});
-//app.use(limiter);
+const limiter = rateLimit({
+    windows: 10 * 60 * 1000, //10 mins
+    max:100
+});
+app.use(limiter);
 
 
 //Prevent http param pollution
@@ -74,16 +74,16 @@ app.use(cors());
 
 
 //mount routers
-/*
+
 app.use('/api/v2/busCompanies', busCompanies);
-app.use('/ap1/v2/trips/', trips);
-app.use('/api/2/auth', auth);
-app.use('/api/v2/users', users);
-app.use('/api/v2/reviews', reviews);
-app.use('/api/v2/locations', locations)
-app.use('/api/v2/destinations/', destinations)
-*/
-//app.use(errorHandler);
+//app.use('/api/v2/trips/', trips);
+//app.use('/api/2/auth', auth);
+//app.use('/api/v2/users', users);
+//app.use('/api/v2/reviews', reviews);
+//app.use('/api/v2/locations', locations);
+//app.use('/api/v2/destinations', destinations)
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, 

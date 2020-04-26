@@ -9,9 +9,9 @@ const {
      getBusCompaniesInRadius,
      busCompaniePhotoUpload
     } = require('../controllers/busCompanies');
-    //const BusCompanie = require('../models/BusCompanie');
+    const BusCompanie = require('../models/BusCompanie');
 
-    // Include other resources routers
+    //Include other resources routers
     //const tripRouter = require('./trips');
     //const reviewRouter = require('./reviews');
 
@@ -21,24 +21,24 @@ const router = express.Router();
 //const advancedResults = require('../middleware/advancedResults');
 //const { protect, authorize} = require('../middleware/auth');
 
-// Re-reoute into other resource routers
-//router.use('/:busCompanieid/trips', tripRouter);
-//router.use('/:busCompaniesid/reviews', reviewRouter);
+ //Re-reoute into other resource routers
+//router.use('/:busCompanieId/trips', tripRouter);
+//router.use('/:busCompanieId/reviews', reviewRouter);
 
 //router.route('/redius:/zipcode/:distance').get(getBusCompaniesInRadius);
 
-//router.route('/:id/photo')
-//.put(protect, authorize(companyPublisher, admin), busCompaniePhotoUpload);
-router.route('/')
+router.route('/:id/photo')
+//.put(protect, authorize('companyPublisher', 'admin'), busCompaniePhotoUpload);
+//router.route('/')
 
-//.get(advancedResults(BusCompanie, 'trips'), getBusCompanies);
+//.get(advancedResults(BusCompanie, 'trips'), getBusCompanies)
 //.post(protect, authorize('companyPublisher', 'admin'), createBusCompanie);
 
 
 router.route('/:id')
 
-.get(getBusCompanie)
-//.put(protect, authorize('companyPublisher', 'admin'), updateBusCompanie);
+//.get(getBusCompanie)
+//.put(protect, authorize('companyPublisher', 'admin'), updateBusCompanie)
 //.delete(protect, authorize('companyPublisher', 'admin'), deleteBusCompanie);
 
 

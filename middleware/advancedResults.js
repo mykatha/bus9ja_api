@@ -36,13 +36,16 @@ req, res, nex => {
     const limit = parseInt(req.query.limit, 10) || 25;
     const startIndex = (page -1) * limit;
     const endIndex = page * limit;
-    const total = await model.countDocuments();
+    const total =  model.countDocuments();
 
     query = query.skip(startIndex).limit(limit);
     if (populate) {
         query = query.populate(populate);
     }
     //Executing query
+    const results =  query;
+
+    //Pagination result
     const pagination = {};
 
     if (endIndex < total) {

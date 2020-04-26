@@ -154,7 +154,7 @@ const BusCompanieSchema = new mongoose.Schema(
             default: Date.now
         },
         user: {
-          type: mongoose.Schema.Objectid,
+          type: mongoose.Schema.ObjectId,
           ref: 'User',
           required: true
         }
@@ -195,10 +195,10 @@ BusCompanieSchema.pre('remove', async function(next) {
 });
 
 // Reverse populate with virtuals
-BusCompanieSchema.vitual('trips', {
-    ref: 'Trip',
-    localField: '_id',
-    foreignField: 'busCompanie',
-    justOne: false
-});
+//BusCompanieSchema.vitual('trips', {
+    //ref: 'Trip',
+    //localField: '_id',
+    //foreignField: 'busCompanie',
+    //justOne: false
+//});
 module.exports = mongoose.model('BusCompanie', BusCompanieSchema);

@@ -6,10 +6,10 @@ const {
     updateTrip,
     deleteTrip
 } = require('../controllers/trips');
-const trips = require('../models/trips')
-const trip = express.Router({margeParam: true});
+const Trip = require('../models/Trip')
+const router = express.Router({margeParams: true});
 
-const advancedResults = require('../middleware/advancedResultes');
+const advancedResults = require('../middleware/advancedResults');
 const {protect, authorize} = require('../middleware/auth');
 
 router.route('/')
