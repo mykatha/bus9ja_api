@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const TripSchema = new mongooseschema({
+const TripSchema = new mongoose.Schema({
     type: {
         type: String,
         trim: true,
@@ -83,4 +83,4 @@ TripSchema.pre('remove', function() {
     this.constructor.getAverageCost(this.busCompanie);
 });
 
-module.exports = mongoose.model('Trips', TripSchema);
+module.exports = mongoose.model('Trip', TripSchema);
