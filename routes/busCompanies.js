@@ -18,7 +18,7 @@ const {
     
 const router = express.Router();
 
-//const advancedResults = require('../middleware/advancedResults');
+const advancedResults = require('../middleware/advancedResults');
 //const { protect, authorize} = require('../middleware/auth');
 
  //Re-reoute into other resource routers
@@ -37,7 +37,7 @@ router.route('/:id/photo')
 
 router.route('/:id')
 
-//.get(getBusCompanie)
+.get(getBusCompanie)
 //.put(protect, authorize('companyPublisher', 'admin'), updateBusCompanie)
 //.delete(protect, authorize('companyPublisher', 'admin'), deleteBusCompanie);
 

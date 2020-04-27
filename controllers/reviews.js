@@ -1,5 +1,5 @@
 const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/aync');
+const asyncHandler = require('../middleware/async');
 const Review = require('../models/Review');
 const BusCompanie = require('..models/BusCompanie');
 
@@ -9,7 +9,7 @@ const BusCompanie = require('..models/BusCompanie');
 // @access Public
 exports.getReviews = asyncHandler(async (req, res, next) => {
     if (req.params.busCompanieId) {
-        const reviews = await Review.find({ busCompanie: req.param.busCompanieId});
+        const reviews = await Review.find({ busCompanie: req.params.busCompanieId});
 
         return res.status(200).json({
             success: true,
@@ -47,7 +47,7 @@ exports.getReview = asyncHandler(async (req, res, next) => {
 // @desc Add review
 // @route POST /api/v2/busCompanies/:busCompanie:id/reviews
 // :access Private
-exports.addReview = asyncHandler(async(req, res, next) => {
+exports.addReview = asyncHandler(async (req, res, next) => {
     req.body.busCompanie = req.params.busCompanieId;
     req.body.user = req.user.id;
     const busCompanie = await BusCompanie.findById(req.params.busCompanieId)
