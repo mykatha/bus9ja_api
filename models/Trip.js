@@ -65,7 +65,7 @@ TripSchema.static.getAverageCost = async function(busCompanieId) {
     ]);
     try {
         await this.model('BusCompanie').findByIdAndUpdate(busCompanieId, {
-            getAverageCost: Math.ceil(obj[0].getAverageCost / 10) * 10
+            averageCost: Math.ceil(obj[0].averageCost / 10) * 10
         });
 
     }catch (err) {

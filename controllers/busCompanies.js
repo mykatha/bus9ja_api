@@ -13,7 +13,7 @@ const BusCompanie = require('../models/BusCompanie');
 
 
 exports.getBusCompanies =  asyncHandler(async (req, res, next) => {
-    res.status(200).json(res.advancedResults);
+   res.status(200).json(res.advancedResults);
 
 });
 // @desc Get single busCompanie

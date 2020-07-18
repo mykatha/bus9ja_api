@@ -25,9 +25,9 @@ const advancedResults = require('../middleware/advancedResults');
 //router.use('/:busCompanieId/trips', tripRouter);
 //router.use('/:busCompanieId/reviews', reviewRouter);
 
-//router.route('/redius:/zipcode/:distance').get(getBusCompaniesInRadius);
+router.route('/redius:/zipcode/:distance').get(getBusCompaniesInRadius);
 
-router.route('/:id/photo')
+//router.route('/:id/photo')
 //.put(protect, authorize('companyPublisher', 'admin'), busCompaniePhotoUpload);
 //router.route('/')
 
